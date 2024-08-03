@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ＥＣＳ</title>
+    <link rel="stylesheet" href="./PeregrineIntro.css">
+  </head>
+  <body>
+    <canvas id="ecs-canvas">Sorry, something went wrong with the &lt;canvas&gt; element :/</canvas>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "ecs": "./modules/ECS.mjs",
+          "types": "./modules/Types.mjs",
+          "vec2d": "./modules/Vector.mjs",
+          "helper": "./modules/Helper.mjs"
+        }
+      }
+    </script>
+
+    <script type="module" src="Main.mjs"></script>
+  </body>
+</html>
