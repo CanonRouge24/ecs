@@ -367,14 +367,16 @@ class ComponentArray {
       `Entity ID ${entityId} out of range`
     )?.temporary;
 
+    // Cache values
+    const componentClass = this.#componentClass,
+          componentName = componentClass.name;
+
     assert(component instanceof componentClass).failWith(
       `Argument for "component" not of type "${componentName}"`
     )?.temporary;
 
     // Cache values
-    const componentClass = this.#componentClass,
-          componentName = componentClass.name,
-          entityToIndexMap = this.#entityToIndexMap;
+    const entityToIndexMap = this.#entityToIndexMap;
 
     assert(!entityToIndexMap.has(entityId)).failWith(
       `"${componentName}" added to same entity more than once`
