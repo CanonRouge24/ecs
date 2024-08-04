@@ -8,6 +8,13 @@
   <body>
     <canvas id="ecs-canvas">Sorry, something went wrong with the &lt;canvas&gt; element :/</canvas>
 
+
+    <!--
+    KA has an issue with allowing `importmap` scripts, claiming that the
+    importmap is added AFTER a module script was executed. Whether that's one
+    of my scripts being loaded first for no reason or because KA has module
+    scripts elsewhere before the sandbox runs and that counts, I don't know.
+
     <script type="importmap">
       {
         "imports": {
@@ -18,6 +25,7 @@
         }
       }
     </script>
+    -->
 
     <script type="module" src="Main.mjs"></script>
   </body>
