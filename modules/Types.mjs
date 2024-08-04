@@ -107,16 +107,16 @@ function expect (value) {
     },
 
     all (types) {
-      // Assert arguments
-      const allValidTypes = everyIndex(types, Type.TYPE_CHECK_PREDICATE);
-
-      assert(allValidTypes.passed).failWith(
-        `Argument for "types" contains invalid type ${allValidTypes[1]} at \
-        index ${allValidTypes[0]}`
-      );
-
       switch (true) {
         case types instanceof Array:
+          // Assert arguments
+          const allValidTypes = everyIndex(types, Type.TYPE_CHECK_PREDICATE);
+
+          assert(allValidTypes.passed).failWith(
+            `Argument for "types" contains invalid type ${allValidTypes[1]} at \
+            index ${allValidTypes[0]}`
+          )?.interface;
+
           // Perform test
           const allOfTypes = everyIndex(
             // Array
@@ -132,6 +132,12 @@ function expect (value) {
 
           // Single type
         default:
+          // Assert arguments
+          assert(types instanceof Type).failWith(
+            `Argument for "type" is neither a valid typeof string nor a function`
+          )?.interface;
+
+          // Perform test
           return values.every(value => isOfType(value, types));
       }
     }
