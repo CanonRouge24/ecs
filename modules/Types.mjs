@@ -16,7 +16,7 @@ class Type {
   static VALID_TYPEOF_TYPES = new Set(
     [
       "bigint", "string", "symbol", "object", "function", "undefined", "boolean",
-    ].concat(Object.keys(this.SPECIAL_TYPEOF_TYPES))
+    ].concat(this.SPECIAL_TYPEOF_TYPES.keys())
   );
 
   static [Symbol.hasInstance] (value) {
