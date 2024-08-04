@@ -1,7 +1,7 @@
 import { MAX_ENTITIES, Component, Signature, System, Coordinator } from "./modules/ECS.mjs";
 import Vec2D from "./modules/Vector.mjs";
 import { assert, integer, Color } from "./modules/Helper.mjs";
-import { expect } from "./modules/Types.mjs";
+import expect from "./modules/Types.mjs";
 
 class Gravity extends Component {
   force;
