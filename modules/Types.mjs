@@ -138,7 +138,7 @@ function expect (value) {
           )?.interface;
 
           // Perform test
-          return values.every(value => isOfType(value, types));
+          return value.every(value => isOfType(value, types));
       }
     }
   };
