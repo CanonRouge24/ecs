@@ -5,11 +5,11 @@ class Type {
   static SPECIAL_TYPEOF_TYPES = new Map(
     [
       [ "integer", value => Number.isInteger(value) ],
+      [ "number", value => typeof value === "number" && !isNaN(value) ],
       [ "char", value => typeof value === "string" && value.length === 1 ],
       [ "null", value => value === null ],
       [ "array", value => Array.isArray(value) ],
-      [ "NaN", value => isNaN(value) ],
-      [ "number", value => typeof value === "number" && !isNaN(value) ]
+      [ "NaN", value => isNaN(value) ]
     ]
   );
 
@@ -68,11 +68,17 @@ function isOfType (value, type) {
   )?.temporary;
 
   switch (true) {
+    // Typeof string with special behavior
     case Type.SPECIAL_TYPEOF_TYPES.has(type):
       return (Type.SPECIAL_TYPEOF_TYPES.get(type))(value);
 
-    default:
+    // Default typeof string
+    case Type.VALID_TYPEOF_TYPES.has(type):
       return typeof value === type;
+
+    // Function class
+    default:
+      return value instanceof type;
   }
 }
 
