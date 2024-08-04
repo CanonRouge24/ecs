@@ -1,5 +1,3 @@
-export { MAX_ENTITIES, Component, Signature, System, Coordinator };
-
 import { assert, integer } from "./Helper.mjs";
 
 
@@ -870,3 +868,5 @@ class Coordinator {
     this.#systemManager.setSignature(systemClass, signature);
   }
 }
+
+export { MAX_ENTITIES, Component, Signature, System, Coordinator };

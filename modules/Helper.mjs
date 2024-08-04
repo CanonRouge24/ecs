@@ -1,5 +1,3 @@
-export { assert, integer, Color };
-
 import expect from "./Types.mjs";
 
 
@@ -44,3 +42,5 @@ class Color {
       );
   }
 }
+
+export { assert, integer, Color };

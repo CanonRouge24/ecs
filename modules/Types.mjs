@@ -1,5 +1,3 @@
-export default expect;
-
 import { assert } from "./Helper.mjs";
 
 
@@ -139,3 +137,5 @@ function expect (value) {
     }
   };
 }
+
+export default expect;
