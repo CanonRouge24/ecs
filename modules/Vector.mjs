@@ -1,5 +1,5 @@
-import { assert } from "helper";
-import { expect } from "types";
+import { assert } from "./Helper.mjs";
+import { expect } from "./Types.mjs";
 
 export default Vec2D;
 

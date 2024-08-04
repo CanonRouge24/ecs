@@ -1,6 +1,7 @@
-import { assert } from "helper";
-
 export default expect;
+
+import { assert } from "./Helper.mjs";
+
 
 class Type {
   static SPECIAL_TYPEOF_TYPES = new Map(

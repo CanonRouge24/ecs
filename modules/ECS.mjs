@@ -1,7 +1,7 @@
-import { assert, integer } from "helper";
-
-
 export { MAX_ENTITIES, Component, Signature, System, Coordinator };
+
+import { assert, integer } from "./Helper.mjs";
+
 
 /**
  * @source https://austinmorlan.com/posts/entity_component_system/#the-entity
