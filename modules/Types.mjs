@@ -108,7 +108,7 @@ function expect (value) {
 
     all (types) {
       // Assert arguments
-      const allValidTypes = everyIndex(types, TYPE_CHECK_PREDICATE);
+      const allValidTypes = everyIndex(types, Type.TYPE_CHECK_PREDICATE);
 
       assert(allValidTypes.passed).failWith(
         `Argument for "types" contains invalid type ${allValidTypes[1]} at \
