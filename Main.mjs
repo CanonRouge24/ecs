@@ -174,7 +174,7 @@ for (let i = 0; i < MAX_ENTITIES; ++i) {
 let deltaTime = 0,
     lastTick = performance.now();
 
-function draw (time) {
+window.draw (time) {
   deltaTime = (time - lastTick) / 1000;
   lastTick = time;
 
@@ -187,5 +187,3 @@ function draw (time) {
 
   window.requestAnimationFrame(draw);
 }
-
-window.requestAnimationFrame(draw);
