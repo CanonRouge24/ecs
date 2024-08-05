@@ -27,6 +27,15 @@
     </script>
     -->
 
-    <script type="module" src="Main.mjs"></script>
+    <script type="module">
+      import initializeDraw from "./Main.mjs";
+
+      const canvas = document.getElementById("ecs-canvas"),
+            ctx = canvas.getContext("2d"),
+
+            draw = initializeDraw(canvas, ctx);
+
+      window.requestAnimationFrame(draw);
+    </script>
   </body>
 </html>
