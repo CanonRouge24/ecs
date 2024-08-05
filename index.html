@@ -1,8 +1,70 @@
 <!DOCTYPE html>
+
 <!--
+
   CanonRouge24's KA Game Library/Engine v0
 
-  Note: Anything written in this scratchpad is only in regards to getting the code to function on KA
+  Note: Anything written in this scratchpad is only in regards to getting the
+  code to function on KA. In order to get the full experience while judging or
+  enjoying, I highly recommend you hop on over to GitHub to give the repo a
+  peek: https://github.com/CanonRouge24/ecs. All I have here is a misleading
+  representation of the library's intended use.
+
+  -----------------------------------------------------------------------------
+
+  Ideally what should happen is the end user writes a JS-object-like (or
+  perhaps one of the other many text markup language formats) representation of
+  their desired Components and Systems, and then initialize the program. Then,
+  the format is parsed and the respective classes are constructed dynamically,
+  bypassing the need to manually include boilerplate to register and link the
+  components, signatures, and systems. Default implementations of common
+  component types should also be included and easily accessible.
+
+  -----------------------------------------------------------------------------
+
+  More than half of the difficulty in getting this entire project working was
+  figuring out how to get the module files working on KA. First was sussing out
+  the correct link to use with jsdelivr, then getting the correct commit hash
+  (I was developing on a branch and using the branch name does NOT result in the
+  latest commit on that branch), and then figuring out different methods to try
+  and get the code imported, either as a whole or through the `import` statement
+
+  It turns out that several features don't work great in KA (big surprise,
+  amirite). You can't have an importmap script, which means importing code tends
+  to result in these big long url strings. It works, alright, but looks silly.
+  The alternative is using a non-module type script and using the dynamic
+  `import` function. Perhaps that would allow us to create our own importmap.
+  (I'll try that in the future)
+
+  Another thing with KA is that it has a live-update editor, leading to all
+  sorts of quirks with how the document reloads. One effect this has is that
+  the script only runs its code once (when imported) but the canvas changes upon
+  reload. If you choose naively to get the canvas context within the script main
+  body, the project will run ONCE upon PAGE (re)load but not after clicking the
+  restart button or editing anything in the live editor. Another is that using
+  `requestAnimationFrame` will create an entirely new main loop upon restart or
+  code edit, leading to a large amount of lag very quickly. We need to remove
+  all active ones (ideally just one) before starting our new instance of a main
+  loop.
+
+  One other thing I learned is that switching tabs or windows leads to some
+  inconsistent behavior — most of the squares have "fallen to the bottom off-
+  screen", but don't spawn back in and continue falling until you come back to
+  the tab. My guess is that the delta time calculations produce a singular very
+  large value between the frame you left/the canvas is unloaded and when you come
+  back, causing all the squares to teleport to the bottom and be moved back to
+  the top on the next frame. Perhaps that can be fixed with a maximum allowed
+  deltaTime, which I can test soon. Not for the contest release version, though.
+
+  Another problem is that the files don't seem to be able to access the global
+  scope. In order to get the code to work, I have to pass in the canvas and
+  context to the code instead.
+
+  ------------------------------------------------------------------------------
+
+  But, like I said, this isn't even the intended use case for this, seeing as
+  just about all the code that should even be dealing with the canvas drawing is
+  defined by the user in a normal script. Look forwards to seeing that happen!
 
 -->
 
@@ -39,7 +101,7 @@
   	</script>
 
   	<script type="module">
-    	import initializeDraw from "https://cdn.jsdelivr.net/gh/CanonRouge24/ecs@1e8a17f/Main.mjs";
+    	import initializeDraw from "https://cdn.jsdelivr.net/gh/CanonRouge24/ecs@latest/Main.mjs";
 
     	const canvas = document.getElementById("ecs-canvas"),
     	      ctx = canvas.getContext("2d"),
