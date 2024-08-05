@@ -1,24 +1,55 @@
 <!DOCTYPE html>
-<html>
+<!--
+  CanonRouge24's KA Game Library/Engine v0
+
+  Note: Anything written in this scratchpad is only in regards to getting the code to function on KA
+
+-->
+
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <title>ＥＣＳ</title>
-    <link rel="stylesheet" href="./PeregrineIntro.css">
+  	<meta charset="utf-8">
+  	<title>ＫＡ　Ｇａｍｅ　Ｅｎｇｉｎｅ？</title>
+
+  	<style>
+  		body {
+  			border: 0px;
+  			margin: 0px;
+  			padding: 0px;
+  			overflow: hidden;
+  		}
+
+  		#ecs-canvas {
+  			width: 100vw;
+  			height: 100vh;
+  		}
+  	</style>
+
   </head>
+
   <body>
-    <canvas id="ecs-canvas">Sorry, something went wrong with the &lt;canvas&gt; element :/</canvas>
+  	<canvas id="ecs-canvas">Sorry, something went wrong with the &lt;canvas&gt; element :/</canvas>
 
-    <script type="importmap">
-      {
-        "imports": {
-          "ecs": "./modules/ECS.mjs",
-          "types": "./modules/Types.mjs",
-          "vec2d": "./modules/Vector.mjs",
-          "helper": "./modules/Helper.mjs"
-        }
-      }
-    </script>
+  	<script type="module">
+  	  let id = window.requestAnimationFrame(_ => _) + 1;
 
-    <script type="module" src="Main.mjs"></script>
+  	  while (id --> 0) {
+  	    window.cancelAnimationFrame(id);
+  	  }
+  	</script>
+
+  	<script type="module">
+    	import initializeDraw from "https://cdn.jsdelivr.net/gh/CanonRouge24/ecs@1e8a17f/Main.mjs";
+
+    	const canvas = document.getElementById("ecs-canvas"),
+    	      ctx = canvas.getContext("2d"),
+
+    	      draw = initializeDraw(canvas, ctx);
+
+    	window.requestAnimationFrame(draw);
+  	</script>
+
+  	<!-- Coax the Restart button back -->
+  	<script></script>
   </body>
 </html>

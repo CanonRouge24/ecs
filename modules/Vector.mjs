@@ -1,7 +1,5 @@
-import { assert } from "helper";
-import { expect } from "types";
-
-export default Vec2D;
+import { assert } from "./Helper.mjs";
+import expect from "./Types.mjs";
 
 class Vec2D {
   static #EPSILON = 1e-6;
@@ -384,3 +382,5 @@ class Vec2D {
     Object.freeze(this);
   }
 }
+
+export default Vec2D;

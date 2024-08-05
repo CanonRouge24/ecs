@@ -1,23 +1,22 @@
-import { assert } from "helper";
+import { assert } from "./Helper.mjs";
 
-export default expect;
 
 class Type {
   static SPECIAL_TYPEOF_TYPES = new Map(
     [
       [ "integer", value => Number.isInteger(value) ],
+      [ "number", value => typeof value === "number" && !isNaN(value) ],
       [ "char", value => typeof value === "string" && value.length === 1 ],
       [ "null", value => value === null ],
       [ "array", value => Array.isArray(value) ],
-      [ "NaN", value => isNaN(value) ],
-      [ "number", value => typeof value === "number" && !isNaN(value) ]
+      [ "NaN", value => isNaN(value) ]
     ]
   );
 
   static VALID_TYPEOF_TYPES = new Set(
     [
       "bigint", "string", "symbol", "object", "function", "undefined", "boolean",
-    ].concat(Object.keys(this.SPECIAL_TYPEOF_TYPES))
+    ].concat([...this.SPECIAL_TYPEOF_TYPES.keys()])
   );
 
   static [Symbol.hasInstance] (value) {
@@ -69,11 +68,17 @@ function isOfType (value, type) {
   )?.temporary;
 
   switch (true) {
+    // Typeof string with special behavior
     case Type.SPECIAL_TYPEOF_TYPES.has(type):
       return (Type.SPECIAL_TYPEOF_TYPES.get(type))(value);
 
-    default:
+    // Default typeof string
+    case Type.VALID_TYPEOF_TYPES.has(type):
       return typeof value === type;
+
+    // Function class
+    default:
+      return value instanceof type;
   }
 }
 
@@ -108,16 +113,16 @@ function expect (value) {
     },
 
     all (types) {
-      // Assert arguments
-      const allValidTypes = everyIndex(types, TYPE_CHECK_PREDICATE);
-
-      assert(allValidTypes.passed).failWith(
-        `Argument for "types" contains invalid type ${allValidTypes[1]} at \
-        index ${allValidTypes[0]}`
-      );
-
       switch (true) {
         case types instanceof Array:
+          // Assert arguments
+          const allValidTypes = everyIndex(types, Type.TYPE_CHECK_PREDICATE);
+
+          assert(allValidTypes.passed).failWith(
+            `Argument for "types" contains invalid type ${allValidTypes[1]} at \
+            index ${allValidTypes[0]}`
+          )?.interface;
+
           // Perform test
           const allOfTypes = everyIndex(
             // Array
@@ -133,8 +138,16 @@ function expect (value) {
 
           // Single type
         default:
-          return values.every(value => isOfType(value, types));
+          // Assert arguments
+          assert(types instanceof Type).failWith(
+            `Argument for "type" is neither a valid typeof string nor a function`
+          )?.interface;
+
+          // Perform test
+          return value.every(value => isOfType(value, types));
       }
     }
   };
 }
+
+export default expect;

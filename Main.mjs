@@ -1,7 +1,7 @@
-import { MAX_ENTITIES, Component, Signature, System, Coordinator } from "ecs";
-import Vec2D from "vec2d";
-import { assert, integer, Color } from "helper";
-import { expect } from "types";
+import { MAX_ENTITIES, Component, Signature, System, Coordinator } from "./modules/ECS.mjs";
+import Vec2D from "./modules/Vector.mjs";
+import { assert, integer, Color } from "./modules/Helper.mjs";
+import expect from "./modules/Types.mjs";
 
 class Gravity extends Component {
   force;
@@ -73,7 +73,7 @@ class Texture extends Component {
 
 
 class Physics extends System {
-  update (deltaTime) {
+  update (ctx, deltaTime) {
     this.entities.forEach(
       function (entityId) {
         const gravity = Coordinator.getComponent(entityId, Gravity),
@@ -93,19 +93,19 @@ class Physics extends System {
 }
 
 
-const canvas = document.getElementById("ecs-canvas"),
-      ctx = canvas.getContext("2d");
+class Canvas {
+  static #width;
+  static #height;
 
-if (!ctx) {
-  throw new Error("Something went wrong with the &lt;canvas&gt; element :/");
+  static initialize (width, height) {
+    this.#width = width;
+    this.#height = height;
+  }
 }
-
 const { clientWidth : width, clientHeight : height } = document.documentElement;
-[ canvas.width, canvas.height ] = [ width, height ];
-
 
 class SquareRenderer extends System {
-  draw (deltaTime) {
+  draw (ctx, deltaTime) {
     this.entities.forEach(
       function (entityId) {
         const transform = Coordinator.getComponent(entityId, Transform),
@@ -174,18 +174,24 @@ for (let i = 0; i < MAX_ENTITIES; ++i) {
 let deltaTime = 0,
     lastTick = performance.now();
 
-function draw (time) {
+let boundDraw;
+
+function draw (ctx, time) {
   deltaTime = (time - lastTick) / 1000;
   lastTick = time;
 
-  physicsSystem.update(deltaTime);
+  physicsSystem.update(ctx, deltaTime);
 
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, width, height);
 
-  squareRendererSystem.draw(deltaTime);
+  squareRendererSystem.draw(ctx, deltaTime);
 
-  window.requestAnimationFrame(draw);
+  window.requestAnimationFrame(boundDraw);
 }
 
-window.requestAnimationFrame(draw);
+export default function initializeDraw (canvas, ctx) {
+  [ canvas.width, canvas.height ] = [ width, height ];
+
+  return (boundDraw = draw.bind(null, ctx));
+}
