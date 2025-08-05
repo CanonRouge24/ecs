@@ -1,4 +1,4 @@
-function createImportMap (baseURL)
+window.createImportMap = function (baseURL)
 {
   const importMap = {
     "imports": {
