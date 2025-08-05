@@ -92,10 +92,36 @@
   <body>
   	<canvas id="ecs-canvas">Sorry, something went wrong with the &lt;canvas&gt; element :/</canvas>
 
+    <!-- <script src="./test.js"></script> -->
+
+    <script type="importmap">
+      {
+        "imports": {
+          "ecs": "./modules/ECS.mjs",
+          "helper": "./modules/Helper.mjs",
+          "types": "./modules/Types.mjs",
+          "vector2d": "./modules/Vector.mjs",
+          "components/": "./components/",
+          "cr24/": "./cr24/"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import initializeDraw from "./Main.mjs";
+
+      const canvas = document.getElementById("ecs-canvas"),
+            ctx = canvas.getContext("2d"),
+            draw = initializeDraw(canvas, ctx);
+
+      window.requestAnimationFrame(draw);
+    </script>
+
+    <!--
   	<script type="module">
   	  let id = window.requestAnimationFrame(_ => _) + 1;
 
-  	  while (id --> 0) {
+  	  while (id-- > 0) {
   	    window.cancelAnimationFrame(id);
   	  }
   	</script>
@@ -110,6 +136,7 @@
 
     	window.requestAnimationFrame(draw);
   	</script>
+    --?
 
   	<!-- Coax the Restart button back -->
   	<script></script>

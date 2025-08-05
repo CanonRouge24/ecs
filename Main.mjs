@@ -1,83 +1,23 @@
-import { MAX_ENTITIES, Component, Signature, System, Coordinator } from "./modules/ECS.mjs";
-import Vec2D from "./modules/Vector.mjs";
-import { assert, integer, Color } from "./modules/Helper.mjs";
-import expect from "./modules/Types.mjs";
+import { MAX_ENTITIES, Component, Signature, System, Coordinator } from "ecs";
+import Vec2D from "vector2d";
 
-class Gravity extends Component {
-  force;
+// Import standard components
+import { Transform } from "components/transform.mjs";
+import { Body } from "components/body.mjs";
+import { Gravity } from "cr24/gravity.mjs";
+import { Texture } from "cr24/texture.mjs";
 
-  constructor (force) {
-    assert(force instanceof Vec2D).failWith(
-      `Argument for "force" not of type "Vec2D"`
-    );
-
-    super();
-
-    this.force = force;
-  }
-}
-
-class RigidBody extends Component {
-  velocity;
-  acceleration;
-
-  constructor (velocity, acceleration) {
-    assert(
-      expect([ velocity, acceleration ]).all(Vec2D)
-    ).failWith(
-      `Argument for "RigidBody#constructor" not of type "Vec2D": ${velocity}, ${acceleration}`
-    );
-
-    super();
-
-    this.velocity = velocity;
-    this.acceleration = acceleration;
-  }
-}
-
-class Transform extends Component {
-  position;
-  rotation;
-  scale;
-
-  constructor (position, rotation, scale) {
-    assert(
-      expect([ position, rotation, scale ]).all(Vec2D)
-    ).failWith(
-      `Argument for "Transform#constructor" not of type "Vec2D": ${position}, ${rotation}, ${scale}`
-    );
-
-
-    super();
-
-    this.position = position;
-    this.rotation = rotation;
-    this.scale = scale;
-  }
-}
-
-class Texture extends Component {
-  color;
-
-  constructor (color) {
-    assert(color instanceof Color).failWith(
-      `Argument for "color" not a valid fill style string, CanvasGradient, or CanvasPattern`
-    );
-
-    super();
-
-    this.color = color;
-  }
-}
 
 
 
 class Physics extends System {
+  static components = [ Transform, Body, Gravity ];
+
   update (ctx, deltaTime) {
     this.entities.forEach(
       function (entityId) {
         const gravity = Coordinator.getComponent(entityId, Gravity),
-              rigidBody = Coordinator.getComponent(entityId, RigidBody),
+              rigidBody = Coordinator.getComponent(entityId, Body),
               transform = Coordinator.getComponent(entityId, Transform);
 
         transform.position = Vec2D.add(transform.position, Vec2D.scale(rigidBody.velocity, deltaTime));
@@ -102,7 +42,10 @@ class Canvas {
     this.#height = height;
   }
 }
-const { clientWidth : width, clientHeight : height } = document.documentElement;
+
+const { clientWidth, clientHeight} = document.documentElement;
+const width = 2 * clientWidth, height = 2 * clientHeight;
+
 
 class SquareRenderer extends System {
   draw (ctx, deltaTime) {
@@ -125,7 +68,7 @@ class SquareRenderer extends System {
 
 
 Coordinator.registerComponent(Gravity);
-Coordinator.registerComponent(RigidBody);
+Coordinator.registerComponent(Body);
 Coordinator.registerComponent(Transform);
 Coordinator.registerComponent(Texture);
 
@@ -134,7 +77,7 @@ const physicsSystem = Coordinator.registerSystem(Physics),
       physicsSignature = new Signature();
 
 physicsSignature.set(Gravity.type);
-physicsSignature.set(RigidBody.type);
+physicsSignature.set(Body.type);
 physicsSignature.set(Transform.type);
 
 Coordinator.setSystemSignature(Physics, physicsSignature);
@@ -159,13 +102,13 @@ for (let i = 0; i < MAX_ENTITIES; ++i) {
         randomGravity = new Vec2D(0, Math.random() * 15),
         randomPosition = new Vec2D(Math.random() * width, Math.random() * -height - 10),
         randomRotation = new Vec2D(Math.random() * 200 - 100, Math.random() * 200 - 100),
-        randomScale = Math.random() * 7 + 3,
+        randomScale = Math.random() * 14 + 6,
 
         randomColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
 
 
   Coordinator.addComponent(entity, new Gravity(randomGravity));
-  Coordinator.addComponent(entity, new RigidBody(zeroVector, zeroVector));
+  Coordinator.addComponent(entity, new Body(zeroVector, zeroVector));
   Coordinator.addComponent(entity, new Transform(randomPosition, randomRotation, new Vec2D(randomScale, randomScale)));
   Coordinator.addComponent(entity, new Texture(randomColor));
 }

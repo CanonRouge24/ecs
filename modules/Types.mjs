@@ -1,4 +1,4 @@
-import { assert } from "./Helper.mjs";
+import { assert } from "helper";
 
 
 class Type {
@@ -150,4 +150,4 @@ function expect (value) {
   };
 }
 
-export default expect;
+export { expect };

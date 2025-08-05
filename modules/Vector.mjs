@@ -1,5 +1,5 @@
-import { assert } from "./Helper.mjs";
-import expect from "./Types.mjs";
+import { assert } from "helper";
+import { expect } from "types";
 
 class Vec2D {
   static #EPSILON = 1e-6;

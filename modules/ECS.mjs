@@ -1,4 +1,5 @@
-import { assert, integer } from "./Helper.mjs";
+import { assert, integer } from "helper";
+import { expect } from "types";
 
 
 /**
@@ -80,10 +81,22 @@ class Component {
   }
 
 
-  constructor () {
+  constructor (that, args) {
     assert(new.target !== Component).failWith(
       `Attempt to instantiate raw Component base class`
     )?.interface;
+
+    const [ fields, types ] = [ Object.keys(that), Object.values(that) ];
+
+    [...args].forEach(
+      (argument, index) => {
+        assert(
+          expect(argument).is(types[index])
+        ).failWith(
+          `Argument for ${fields[index]} not of type "${types[index]}"`
+        )?.interface;
+      }
+    );
   }
 }
 

@@ -1,4 +1,4 @@
-import expect from "./Types.mjs";
+import { expect } from "types";
 
 
 function assert (test) {
