@@ -1,8 +1,3 @@
-console.log("IMPORT.META.RESOLVE('ecs'): " + import.meta.resolve("ecs"));
-
-export default 1;
-
-/*
 import { MAX_ENTITIES, Component, Signature, System, Coordinator } from "ecs";
 import Vec2D from "vector2d";
 
@@ -12,7 +7,6 @@ import { Transform } from "./components/transform.js";
 import { Body } from "./components/body.js";
 import { Gravity } from "./cr24/gravity.js";
 import { Texture } from "./cr24/texture.js";
-
 
 
 
@@ -144,4 +138,4 @@ export default function initializeDraw (canvas, ctx) {
 
   return (boundDraw = draw.bind(null, ctx));
 }
-*/
+

@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "ecs": "./modules/ECS.js",
+    "helper": "./modules/Helper.js",
+    "types": "./modules/Types.js",
+    "vector2d": "./modules/Vector.js",
+    "components/": "./components/",
+    "cr24/": "./cr24/"
+  }
+}
