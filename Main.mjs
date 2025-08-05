@@ -1,5 +1,8 @@
 console.log("IMPORT.META.RESOLVE('ecs'): " + import.meta.resolve("ecs"));
 
+export default 1;
+
+/*
 import { MAX_ENTITIES, Component, Signature, System, Coordinator } from "ecs";
 import Vec2D from "vector2d";
 
@@ -141,3 +144,4 @@ export default function initializeDraw (canvas, ctx) {
 
   return (boundDraw = draw.bind(null, ctx));
 }
+*/
