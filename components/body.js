@@ -1,5 +1,5 @@
-import { Component } from "../modules/ECS.mjs";
-import Vec2D from "../modules/Vector.mjs";
+import { Component } from "ecs";
+import Vec2D from "vector2d";
 
 class Body extends Component {
   static velocity = Vec2D;
