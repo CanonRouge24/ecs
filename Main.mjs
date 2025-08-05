@@ -1,6 +1,8 @@
 import { MAX_ENTITIES, Component, Signature, System, Coordinator } from "ecs";
 import Vec2D from "vector2d";
 
+console.log("IMPORT.META.RESOLVE('ecs'): " + import.meta.resolve("ecs"));
+
 // Import standard components
 import { Transform } from "./components/transform.js";
 import { Body } from "./components/body.js";
