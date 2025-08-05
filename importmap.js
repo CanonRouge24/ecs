@@ -1,4 +1,4 @@
-const createImportMap = (() => {
+var createImportMap = (() => {
   const importMap = {
     "imports": {
       "main": `Main.mjs`,
