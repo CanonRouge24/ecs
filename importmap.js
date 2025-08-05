@@ -13,7 +13,7 @@ var createImportMap = (() => {
 
   return (baseURL) => {
     for (const mapping in importMap.imports) {
-      importMap.imports[mapping] = `${baseURL}/${importMap.imports[mapping]}`;
+      importMap.imports[mapping] = `${baseURL}${importMap.imports[mapping]}`;
     }
 
     const script = document.createElement("script");
