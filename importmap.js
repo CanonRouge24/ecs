@@ -19,6 +19,7 @@ var createImportMap = (() => {
     const script = document.createElement("script");
     script.type = "importmap";
     script.textContent = JSON.stringify(importMap);
-    document.head.appendChild(script);
+
+    return script;
   };
 })();
