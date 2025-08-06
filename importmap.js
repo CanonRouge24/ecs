@@ -2,10 +2,10 @@ var createImportMap = (() => {
   const importMap = {
     "imports": {
       "main": `Main.mjs`,
-      "ecs": `modules/ECS.js`,
-      "helper": `modules/Helper.js`,
-      "types": `modules/Types.js`,
-      "vector2d": `modules/Vector.js`,
+      "ecs": `modules/ECS.mjs`,
+      "helper": `modules/Helper.mjs`,
+      "types": `modules/Types.mjs`,
+      "vector2d": `modules/Vector.mjs`,
       "components/": `componenets/`,
       "cr24/": `cr24/`
     }

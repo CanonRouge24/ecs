@@ -3,10 +3,10 @@ import Vec2D from "vector2d";
 
 
 // Import standard components
-import { Transform } from "./components/transform.js";
-import { Body } from "./components/body.js";
-import { Gravity } from "./cr24/gravity.js";
-import { Texture } from "./cr24/texture.js";
+import { Transform } from "./components/transform.mjs";
+import { Body } from "./components/body.mjs";
+import { Gravity } from "./cr24/gravity.mjs";
+import { Texture } from "./cr24/texture.mjs";
 
 
 
