@@ -5,7 +5,7 @@ var createImportMap = (() => {
       "ecs": `modules/ECS.js`,
       "helper": `modules/Helper.js`,
       "types": `modules/Types.js`,
-      "vector2d": `modules/Vectors.js`,
+      "vector2d": `modules/Vector.js`,
       "components/": `componenets/`,
       "cr24/": `cr24/`
     }
